@@ -1,0 +1,9 @@
+npm init
+npm i next@9
+npm i react react-dom
+npm i prop-types
+npm i eslint -D 
+npm eslint-plugin-import -D
+npm i eslint-plugin-react -D 
+npm i eslint-plugin-react-hooks -D
+ npm i antd styled-components @ant-design/icons
