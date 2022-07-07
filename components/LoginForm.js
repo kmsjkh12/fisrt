@@ -1,8 +1,10 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback } from 'react';
 import {Form, Input, Button} from 'antd';
 import Link from 'next/link'
 import styled from 'styled-components';
-
+import useInput from '../hooks/useInput';
+import { useDispatch } from 'react-redux';
+import { loginAction } from '../reducers/user';
 const ButtonWrapper = styled.div`
 margin-top: 10px;
 `
@@ -10,25 +12,14 @@ const FormWapper= styled(Form)`
 padding:10px;
 `
 
-const LoginForm = ({setIsLoggedIn}) =>{
-const [Id, setId ]= useState('');
-const [password, setPassword] =useState('');
-
-const onChangeId=useCallback((e)=>{
-    setId(e.target.value)
-},[])
-
-const onChangePw=useCallback((e)=>{
-    setPassword(e.target.value)
-
-},[])
-
-const onSubmitForm=useCallback(()=>{
-    console.log(Id,password);
-    setIsLoggedIn(true);
-},[Id,password]);
-
-
+const LoginForm = () =>{
+    const dispatch = useDispatch();
+    const [id, onChangeId] = useInput('');
+    const [password, onChangePw] =useInput('');
+    const onSubmitForm=useCallback(()=>{
+        console.log(id,password)
+        dispatch(loginAction({id,password}));
+    },[id,password]);
     return(
       <FormWapper onFinish={onSubmitForm}> 
         <div>
@@ -36,7 +27,7 @@ const onSubmitForm=useCallback(()=>{
             <br />
             <Input 
             name="user-id" 
-            value={Id} 
+            value={id} 
             onChange={onChangeId} 
             required/>
         </div>
@@ -56,5 +47,6 @@ const onSubmitForm=useCallback(()=>{
       </FormWapper>
     );
 };
+
 
 export default LoginForm;
